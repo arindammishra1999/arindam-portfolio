@@ -424,6 +424,9 @@ section {
     border-color: rgb(163,163,163);
     text-align: center;
 }
+.details-container .icon {
+    cursor: default;
+}
 
 .section-container {
     gap: 4rem;
