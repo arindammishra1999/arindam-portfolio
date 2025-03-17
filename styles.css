@@ -587,4 +587,17 @@ footer p {
     text-align: center;
 }
 
+.cursor-particle {
+    pointer-events: none;
+    mix-blend-mode: screen;
+    filter: blur(1px);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.cursor-blast {
+    pointer-events: none;
+    mix-blend-mode: screen;
+    filter: blur(1px);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
 
