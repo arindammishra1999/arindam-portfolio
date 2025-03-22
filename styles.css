@@ -457,6 +457,7 @@ section {
 #experience{
     position: relative;
     cursor: default;
+    padding-bottom: 10%;
 }
 
 .experience-sub-title {
@@ -504,6 +505,8 @@ article .icon {
 
 /* PROJECTS SECION */
 
+/* PROJECTS SECTION - UPDATED */
+
 #projects {
     position: relative;
 }
@@ -511,23 +514,54 @@ article .icon {
 .color-container {
     border-color: rgb(163,163,163);
     background: rgb(250,250,250);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 450px; /* Fixed height for all containers */
+    width: 100%;
+    max-width: 350px; /* Fixed width */
+    margin: 1rem;
+    border-radius: 2rem;
+}
+
+.article-container {
+    width: 100%;
+    height: 270px; /* Fixed height for image area */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Prevent image overflow */
+    margin-top: 1rem;
 }
 
 .project-img {
     border-radius: 2rem;
-    width: 90%;
-    height: 90%;
+    width: auto; /* Let width adjust automatically */
+    height: auto; /* Let height adjust automatically */
+    max-width: 90%; /* Constrain maximum width */
+    max-height: 90%; /* Constrain maximum height */
+    object-fit: contain; /* Maintain aspect ratio */
 }
 
 .project-title {
     margin: 1rem;
     color: black;
+    height: 60px; /* Fixed height for title area */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .project-btn {
     color: black;
     border-color: rgb(163,163,163);
 }
+
+.btn-container {
+    margin-top: auto; /* Push buttons to bottom */
+    margin-bottom: 1.5rem;
+}
+
 
 /* CONTACT */
 
@@ -579,7 +613,7 @@ article .icon {
 }
 
 footer {
-   height: 26vh;
+   height: 5vh;
     margin: 0 1rem;
 }
 
