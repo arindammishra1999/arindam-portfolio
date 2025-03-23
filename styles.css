@@ -407,6 +407,11 @@ section {
     gap: 2rem;
     margin-bottom: 2rem;
     margin-top: 2rem;
+    display: flex;
+    justify-content: center; /* Ensure center alignment */
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    width: 100%; /* Take full width */
+
 }
 
 .about-details-container {
@@ -517,9 +522,8 @@ article .icon {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 450px; /* Fixed height for all containers */
-    width: 100%;
-    max-width: 350px; /* Fixed width */
+    height: 450px;
+    width: 350px; /* Set fixed width instead of 100% with max-width */
     margin: 1rem;
     border-radius: 2rem;
 }

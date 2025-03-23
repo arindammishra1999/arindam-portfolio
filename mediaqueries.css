@@ -1,171 +1,241 @@
-@media  screen and (max-width: 1400px){
+@media screen and (max-width: 1400px) {
     #profile {
-        height: 83vh;
-        margin-bottom: 6rem;
+      height: 83vh;
+      margin-bottom: 6rem;
     }
     .about-containers {
-        flex-wrap: wrap;
+      flex-wrap: wrap;
     }
-}
-
-
-@media  screen and (max-width: 1200px){
+  }
+  
+  @media screen and (max-width: 1200px) {
     html, body {
-        overflow-x: hidden; /* Ensure horizontal overflow is hidden */
+      overflow-x: hidden;
     }
     #desktop-nav {
-        display: none;
+      display: none;
     }
     #hamburger-nav {
-        display: flex;
+      display: flex;
     }
-    #profile{
-        margin-bottom: 0;
-        margin-top: 2rem;
+    #profile {
+      margin-bottom: 0;
+      margin-top: 2rem;
     }
     #experience, .experience-details-container {
-        margin-top: 2rem;
+      margin-top: 2rem;
     }
     #profile, .section-container {
-        display: block;
+      display: block;
     }
     #about {
-        margin-bottom: 2rem;
+      margin-bottom: 2rem;
     }
     .arrow {
-        display: none;
+      display: none;
     }
-    section, .section-container{
-        height: fit-content;
+    section, .section-container {
+      height: fit-content;
     }
     section {
-        margin: 0 5%;
+      margin: 0 5%;
     }
     .about-containers {
-        margin-top: 0;
+      margin-top: 0;
     }
     .section_text {
-        margin-left: 3rem;
+      margin-left: 3rem;
     }
     .section_pic-container {
-        width: 275px;
-        height: 275px;
-        margin: 0 auto 2rem;
+      width: 275px;
+      height: 275px;
+      margin: 0 auto 2rem;
     }
     .section_text_p1 {
-        margin-top: 2rem;
-        font-size: 1.5rem;
-        align-self: center;
-        text-align: center;
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      align-self: center;
+      text-align: center;
     }
     .section_pic-container_2 {
-        width: 275px;
-        height: 275px;
-        margin: 0 auto 2rem;
+      width: 275px;
+      height: 275px;
+      margin: 0 auto 2rem;
     }
-
     .section_text_p2 {
-        font-size: 1.5rem;
-        align-self: center;
-        text-align: center;
+      font-size: 1.5rem;
+      align-self: center;
+      text-align: center;
     }
     .title {
-        font-size: 2rem;
+      font-size: 2rem;
     }
-
     #socials-container {
-        margin-bottom: 2rem;
+      margin-bottom: 2rem;
     }
-}
+    
 
-@media  screen and (max-width: 600px){
-
+  }
+  
+  @media screen and (max-width: 1500px) {
     html, body {
-        overflow-x: hidden; /* Ensure horizontal overflow is hidden */
+      overflow-x: hidden;
     }
-
-    #contact,footer {
-        height:40vh;
+    #contact, footer {
+      height: 15vh;
     }
-    #profile{
-        height: 60vh;
-        margin-bottom: 0;
+    #profile {
+      height: 60vh;
+      margin-bottom: 0;
     }
     #about {
-        margin-top: 3rem;
+      margin-top: 3rem;
     }
     article {
-        font-size: 1rem;
+      font-size: 1rem;
     }
-
     footer nav {
-        height: fit-content;
-        margin-bottom: 2rem;
+      height: fit-content;
+      margin-bottom: 2rem;
     }
-
     footer p {
-        margin-top: 15rem;
+      margin-top: 15rem;
+    }
+    .about-containers, .btn-container {
+      flex-wrap: wrap;
     }
 
-    .about-containers, .contact-info-upper-container, .btn-container {
-        flex-wrap: wrap;
-    }
-    .contact-info-container {
-        margin: 0;
-    }
     .contact-info-container p, .nav-links li a {
-        font-size: 1rem;
+      font-size: 1rem;
     }
+
+    .contact-info-upper-container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem;
+    }
+    
+    .contact-info-container {
+        width: 100%;
+        justify-content: flex-start;
+        margin: 0.5rem 0;
+    }
+    
+    /* Make sure both icons have the same size */
+    .contact-icon, .email-icon {
+        height: 2.5rem;
+        width: 2.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* Add consistent spacing for text */
+    .contact-info-container p {
+        margin-left: 0.5rem;
+    }
+    
+
     .experience-sub-title {
-        font-size: 1.25rem;
+      font-size: 1.25rem;
     }
     .logo {
-        font-size: 1.5rem;
+      font-size: 1.5rem;
     }
-    .section_pic-container_1 {
-        width: auto;
-        height: 46vw;
-        justify-content: center;
-    }
-
-    .section_pic-container {
-        width: auto;
-        height: 46vw;
-        justify-content: center;
-    }
-
-    /* .section_pic-container {
-        width: 275px;
-        height: 275px;
-        margin: 0 auto 2rem;
-    } */
-
+    .section_pic-container_1,
+    .section_pic-container,
     .section_pic-container_2 {
-        width: auto;
-        height: 46vw;
-        justify-content: center;
+      width: auto;
+      height: 46vw;
+      justify-content: center;
     }
-
-    .section_text_p1 {
-        font-size: 1.5rem;
-        align-self: center;
-        text-align: center;
-    }
+    .section_text_p1,
     .section_text_p2 {
-        font-size: 1.5rem;
-        align-self: center;
-        text-align: center;
+      font-size: 1.5rem;
+      align-self: center;
+      text-align: center;
     }
     .title {
-        font-size: 2rem;
+      font-size: 2rem;
     }
     .text-container {
-        text-align: justify;
+      text-align: justify;
     }
-
     .section_text {
-        margin-left: 3rem;
+      margin-left: 3rem;
+    }
+    
+    #experience {
+        height: auto;
+        padding-bottom: 2rem;
+      }
+      
+      /* Make sure the article container expands and wraps properly */
+      #experience .article-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: space-between;
+        height: auto;
+        overflow: visible;
+      }
+      
+      /* Ensure articles are sized appropriately */
+      #experience article {
+        width: 45%; /* Allow 2 per row on mobile */
+        margin-bottom: 1rem;
+      }
+    
+    /* Adjust icon size only in experience section */
+    #experience .icon {
+      width: 30px;
+      height: 30px;
+    }
+    
+    /* Smaller text for skill entries */
+    #experience article h3 {
+      font-size: 0.9rem;
+      margin: 0.25rem 0;
+    }
+    
+    #experience article p {
+      font-size: 0.8rem;
+      margin: 0;
     }
 
+    #chatbase-bubble-button {
+        bottom: 45px !important;
+        right: 15px !important;
+        z-index: 2147483645 !important; /* Keep the high z-index */
+      }
+      
+      #chatbase-bubble-window {
+        bottom: 75px !important; /* Give some space from the bottom */
+        right: 15px !important;
+        max-width: 85vw !important; /* Limit to 85% of viewport width */
+        max-height: 70vh !important; /* Limit to 70% of viewport height */
+        z-index: 2147483646 !important;
+      }
+      
+      #chatbase-message-bubbles {
+        bottom: 75px !important;
+        right: 15px !important;
+        max-width: 85vw !important;
+      }
 
 }
+  
+/* Extra small screens need more adjustment */
+  @media screen and (max-width: 150px) {
+    #experience .article-container {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    #experience article {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+  }
