@@ -1,0 +1,9 @@
+{
+  "name": "arindam-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Arindam Mishra's portfolio (static site + serverless resume chat)",
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest"
+  }
+}
