@@ -147,3 +147,85 @@ document.addEventListener('DOMContentLoaded', () => {
 });
     
 
+
+
+/* ===== Resume chat assistant ===== */
+(function () {
+    const toggle = document.getElementById('chat-toggle');
+    const panel = document.getElementById('chat-panel');
+    const closeBtn = document.getElementById('chat-close');
+    const form = document.getElementById('chat-form');
+    const input = document.getElementById('chat-input');
+    const send = document.getElementById('chat-send');
+    const box = document.getElementById('chat-messages');
+    const sugg = document.getElementById('chat-suggestions');
+    if (!toggle) return;
+
+    const history = []; // {role, content}
+    const SUGGESTIONS = ['What does Arindam do at IBM?', 'Tell me about ReqGen', 'What is his tech stack?'];
+
+    function add(role, text, cls) {
+        const el = document.createElement('div');
+        el.className = 'chat-msg ' + role + (cls ? ' ' + cls : '');
+        el.textContent = text;
+        box.appendChild(el);
+        box.scrollTop = box.scrollHeight;
+        return el;
+    }
+
+    function open() {
+        panel.hidden = false;
+        toggle.hidden = true;
+        toggle.setAttribute('aria-expanded', 'true');
+        if (!box.children.length) {
+            add('bot', "Hi! I'm an AI assistant that answers questions about Arindam's experience, projects and skills using his resume. What would you like to know?");
+            SUGGESTIONS.forEach(q => {
+                const b = document.createElement('button');
+                b.type = 'button';
+                b.textContent = q;
+                b.onclick = () => ask(q);
+                sugg.appendChild(b);
+            });
+        }
+        input.focus();
+    }
+    function close() {
+        panel.hidden = true;
+        toggle.hidden = false;
+        toggle.setAttribute('aria-expanded', 'false');
+    }
+
+    async function ask(text) {
+        text = text.trim();
+        if (!text || send.disabled) return;
+        sugg.innerHTML = '';
+        add('user', text);
+        history.push({ role: 'user', content: text });
+        input.value = '';
+        send.disabled = true;
+        const pending = add('bot', 'Thinking…');
+        try {
+            const res = await fetch('/api/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ messages: history.slice(-10) })
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+            pending.textContent = data.reply;
+            history.push({ role: 'assistant', content: data.reply });
+        } catch (err) {
+            pending.textContent = err.message || 'Sorry, I could not reach the assistant. Please try again.';
+            pending.classList.add('error');
+            history.pop(); // drop the unanswered user turn so history stays valid
+        } finally {
+            send.disabled = false;
+            box.scrollTop = box.scrollHeight;
+            input.focus();
+        }
+    }
+
+    toggle.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    form.addEventListener('submit', e => { e.preventDefault(); ask(input.value); });
+})();
