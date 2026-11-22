@@ -142,12 +142,16 @@
     .logo {
       font-size: 1.5rem;
     }
-    .section_pic-container_1,
     .section_pic-container,
     .section_pic-container_2 {
       width: auto;
       height: 46vw;
       justify-content: center;
+    }
+    /* background-image box: width:auto collapses it to 0, so keep a fixed circle */
+    .section_pic-container_1 {
+      width: 400px;
+      height: 400px;
     }
     .section_text_p1,
     .section_text_p2 {
@@ -203,25 +207,6 @@
       margin: 0;
     }
 
-    #chatbase-bubble-button {
-        bottom: 45px !important;
-        right: 15px !important;
-        z-index: 2147483645 !important; /* Keep the high z-index */
-      }
-      
-      #chatbase-bubble-window {
-        bottom: 75px !important; /* Give some space from the bottom */
-        right: 15px !important;
-        max-width: 85vw !important; /* Limit to 85% of viewport width */
-        max-height: 70vh !important; /* Limit to 70% of viewport height */
-        z-index: 2147483646 !important;
-      }
-      
-      #chatbase-message-bubbles {
-        bottom: 75px !important;
-        right: 15px !important;
-        max-width: 85vw !important;
-      }
 
 }
   
@@ -245,7 +230,4 @@
   .exp-company { font-size: 1.4rem; }
   .project-card { width: 100%; max-width: 350px; }
   #skills, #experience { height: auto; padding-bottom: 4rem; }
-  #chat-toggle .chat-toggle-label { display: none; }
-  #chat-toggle { padding: 0.9rem; }
-  #chat-panel { right: .5rem; bottom: .5rem; width: calc(100vw - 1rem); height: calc(100vh - 1rem); max-height: none; }
 }
