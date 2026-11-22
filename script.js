@@ -145,87 +145,98 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-    
 
 
-
-/* ===== Resume chat assistant ===== */
+/* ===== Polish: scroll reveal, count-up numbers, rotating role line ===== */
 (function () {
-    const toggle = document.getElementById('chat-toggle');
-    const panel = document.getElementById('chat-panel');
-    const closeBtn = document.getElementById('chat-close');
-    const form = document.getElementById('chat-form');
-    const input = document.getElementById('chat-input');
-    const send = document.getElementById('chat-send');
-    const box = document.getElementById('chat-messages');
-    const sugg = document.getElementById('chat-suggestions');
-    if (!toggle) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasIO = 'IntersectionObserver' in window;
 
-    const history = []; // {role, content}
-    const SUGGESTIONS = ['What does Arindam do at IBM?', 'Tell me about ReqGen', 'What is his tech stack?'];
-
-    function add(role, text, cls) {
-        const el = document.createElement('div');
-        el.className = 'chat-msg ' + role + (cls ? ' ' + cls : '');
-        el.textContent = text;
-        box.appendChild(el);
-        box.scrollTop = box.scrollHeight;
-        return el;
-    }
-
-    function open() {
-        panel.hidden = false;
-        toggle.hidden = true;
-        toggle.setAttribute('aria-expanded', 'true');
-        if (!box.children.length) {
-            add('bot', "Hi! I'm an AI assistant that answers questions about Arindam's experience, projects and skills using his resume. What would you like to know?");
-            SUGGESTIONS.forEach(q => {
-                const b = document.createElement('button');
-                b.type = 'button';
-                b.textContent = q;
-                b.onclick = () => ask(q);
-                sugg.appendChild(b);
+    // --- 1. scroll reveal ---
+    if (!reduce && hasIO) {
+        const targets = document.querySelectorAll(
+            'section:not(#profile) .section_text_p1, section:not(#profile) h1.title, ' +
+            '.details-container, .text-container, .contact-info-upper-container'
+        );
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((en) => {
+                if (!en.isIntersecting) return;
+                const el = en.target;
+                io.unobserve(el);
+                el.classList.add('in');
+                const done = () => { el.classList.remove('reveal', 'in'); el.style.transitionDelay = ''; };
+                el.addEventListener('transitionend', (e) => { if (e.propertyName === 'transform') done(); }, { once: true });
+                setTimeout(done, 1800);   // safety net if transitionend never fires
             });
-        }
-        input.focus();
-    }
-    function close() {
-        panel.hidden = true;
-        toggle.hidden = false;
-        toggle.setAttribute('aria-expanded', 'false');
+        }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+        const seen = new Map();
+        targets.forEach((el) => {
+            const parent = el.parentElement, n = seen.get(parent) || 0;
+            seen.set(parent, n + 1);
+            el.classList.add('reveal');
+            el.style.transitionDelay = Math.min(n, 4) * 90 + 'ms';   // stagger siblings
+            io.observe(el);
+        });
     }
 
-    async function ask(text) {
-        text = text.trim();
-        if (!text || send.disabled) return;
-        sugg.innerHTML = '';
-        add('user', text);
-        history.push({ role: 'user', content: text });
-        input.value = '';
-        send.disabled = true;
-        const pending = add('bot', 'Thinking…');
-        try {
-            const res = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ messages: history.slice(-10) })
+    // --- 3. count-up numbers (wrapped in <strong> in the experience bullets) ---
+    if (!reduce && hasIO) {
+        const nums = [];
+        document.querySelectorAll('.exp-bullets strong').forEach((el) => {
+            const m = el.textContent.trim().match(/^(\d+(?:\.\d+)?)(\D*)$/);
+            if (!m) return;
+            const final = el.textContent;
+            const span = document.createElement('span');
+            span.className = 'count';
+            span.textContent = final;
+            el.textContent = '';
+            el.appendChild(span);
+            span.style.minWidth = span.getBoundingClientRect().width + 'px';   // stop text re-wrapping while counting
+            span.dataset.final = final;
+            span.dataset.n = m[1];
+            span.dataset.suffix = m[2];
+            span.textContent = '0' + m[2];
+            nums.push(span);
+        });
+        const cio = new IntersectionObserver((entries) => {
+            entries.forEach((en) => {
+                if (!en.isIntersecting) return;
+                const el = en.target; cio.unobserve(el);
+                const end = parseFloat(el.dataset.n), suffix = el.dataset.suffix, t0 = performance.now(), dur = 1400;
+                (function tick(now) {
+                    const k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3);
+                    el.textContent = Math.round(end * e) + suffix;
+                    if (k < 1) requestAnimationFrame(tick); else el.textContent = el.dataset.final;
+                })(t0);
             });
-            const data = await res.json().catch(() => ({}));
-            if (!res.ok) throw new Error(data.error || 'Something went wrong.');
-            pending.textContent = data.reply;
-            history.push({ role: 'assistant', content: data.reply });
-        } catch (err) {
-            pending.textContent = err.message || 'Sorry, I could not reach the assistant. Please try again.';
-            pending.classList.add('error');
-            history.pop(); // drop the unanswered user turn so history stays valid
-        } finally {
-            send.disabled = false;
-            box.scrollTop = box.scrollHeight;
-            input.focus();
-        }
+        }, { threshold: 0.6 });
+        nums.forEach((n) => cio.observe(n));
     }
 
-    toggle.addEventListener('click', open);
-    closeBtn.addEventListener('click', close);
-    form.addEventListener('submit', e => { e.preventDefault(); ask(input.value); });
+    // --- 4. rotating role line ---
+    const role = document.querySelector('.section_text_p2');
+    if (role && !reduce) {
+        const phrases = ['Software developer', 'AI & LLM builder', 'Full-stack engineer'];
+        const order = [3, 1, 2, 4, 5];
+        const hoverHold = (el) => {
+            el.addEventListener('mouseover', () => el.classList.add('held'));
+            el.addEventListener('mouseout', () => setTimeout(() => el.classList.remove('held'), 2000));
+        };
+        const render = (text) => {
+            role.textContent = '';
+            [...text].forEach((ch, i) => {
+                const s = document.createElement('span');
+                s.className = ch === ' ' ? 'color color-space' : 'color color-' + order[i % order.length];
+                s.textContent = ch;
+                if (ch !== ' ') hoverHold(s);
+                role.appendChild(s);
+            });
+        };
+        let i = 0;
+        setInterval(() => {
+            if (document.hidden) return;
+            role.classList.add('swap');
+            setTimeout(() => { i = (i + 1) % phrases.length; render(phrases[i]); role.classList.remove('swap'); }, 320);
+        }, 3000);
+    }
 })();
